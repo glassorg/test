@@ -1,8 +1,8 @@
-import { test } from "./index.js"
+import { test } from "./index"
 
 const [,,dir] = process.argv
 if (dir == null) {
-    console.log(`\nUsage: gtest directory\n\n`)
+    console.log(`\nUsage: gtest [-w] directory\n\n`)
     process.exit(1)
 }
 else {

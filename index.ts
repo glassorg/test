@@ -1,13 +1,13 @@
 import * as fs from "fs";
 import * as path from "path";
+import * as chalk from "chalk";
 
-function getFilesRecursive(directory, pattern = /\btest\b.*\.js$/, rootDirectory = directory, allFiles = []) {
+function getFilesRecursive(directory, pattern = /\btest\b.*\.(ts|js)$/, rootDirectory = directory, allFiles = []) {
     for (let name of fs.readdirSync(directory)) {
         let filename = path.join(directory, name)
         let fileInfo = fs.statSync(filename)
         if (fileInfo.isFile()) {
             let relativeFilename = path.relative(rootDirectory, filename)
-            console.log({ relativeFilename })
             if (pattern.test(relativeFilename)) {
                 allFiles.push(relativeFilename)
             }
@@ -20,11 +20,19 @@ function getFilesRecursive(directory, pattern = /\btest\b.*\.js$/, rootDirectory
 }
 
 export function test(directory) {
-    console.log("test function")
+    if (directory === ".") {
+        directory = "./"
+    }
     let files = getFilesRecursive(directory)
     for (let file of files) {
-        console.log("file: " + file)
         let relativePath = path.relative(__dirname, path.join(directory, file))
-        require(relativePath)
+        if (!relativePath.startsWith("/")) {
+            relativePath = "./" + relativePath;
+        }
+        import(relativePath).then(module => {
+            console.log(chalk.green(`Passed: ${file}`))
+        }).catch(e => {
+            console.log(chalk.red(`Failed: ${file}`), e)
+        })
     }
 }
