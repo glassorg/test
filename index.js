@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-export function getFilesRecursive(directory, pattern = /\btest\b.*\.js$/, rootDirectory = directory, allFiles = []) {
+export function getFilesRecursive(directory, pattern = /\btest\b.*\.m?js$/, rootDirectory = directory, allFiles = []) {
     for (let name of fs.readdirSync(directory)) {
         let filename = path.join(directory, name)
         let fileInfo = fs.statSync(filename)
