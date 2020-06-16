@@ -1,24 +1,20 @@
 {
   "name": "@glas/test",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Micro Testing Script",
   "bin": {
-    "gtest": "./gtest.sh"
+    "gtest": "./bin/gtest.js"
   },
   "main": "index.js",
+  "type": "module",
   "repository": "https://github.com/glassorg/test.git",
   "author": "Kris Nye <krisnye@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "deploy": "yarn publish --access public"
+    "deploy": "yarn publish --access public",
+    "clean": "rm -rf node_modules"
   },
   "dependencies": {
-    "chalk": "^4.1.0",
-    "nodemon": "^2.0.4",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.5"
-  },
-  "devDependencies": {
-    "@types/chalk": "^2.2.0"
+    "chalk": "^4.1.0"
   }
 }
