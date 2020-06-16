@@ -1,6 +1,6 @@
 {
   "name": "@glas/test",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Micro Testing Script",
   "bin": {
     "gtest": "./gtest.js"
