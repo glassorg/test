@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { test } from "../index.js"
-import chalk from "chalk"
+import { test } from "./index.js"
+const red = text => `\x1b[31m${text}\x1b[0m`
+const green = text => `\x1b[32m${text}\x1b[0m`
 
 const [,,dir] = process.argv
 if (dir == null) {
@@ -12,17 +13,17 @@ else {
         dir,
         (test, error) => {
             if (error) {
-                console.log(chalk.red(`Failed: ${test}`), error)
+                console.log(red(`Failed: ${test}`), error)
             }
             else {
-                console.log(chalk.green(`Passed: ${test}`))
+                console.log(green(`Passed: ${test}`))
             }
         },
         (pass, fail) => {
             let total = pass + fail
-            console.log(chalk.green(`Passed ${pass}/${total}`))
+            console.log(green(`Passed ${pass}/${total}`))
             if (fail > 0) {
-                console.log(chalk.red(`Failed ${fail}/${total}`))
+                console.log(red(`Failed ${fail}/${total}`))
             }
             process.exit(Math.sign(fail))
         }

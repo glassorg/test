@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "Micro Testing Script",
   "bin": {
-    "gtest": "./bin/gtest.js"
+    "gtest": "./gtest.js"
   },
   "main": "index.js",
   "type": "module",
@@ -11,10 +11,6 @@
   "author": "Kris Nye <krisnye@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "deploy": "yarn publish --access public",
-    "clean": "rm -rf node_modules"
-  },
-  "dependencies": {
-    "chalk": "^4.1.0"
+    "deploy": "yarn publish --access public"
   }
 }
