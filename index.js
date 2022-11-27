@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { isAsyncFunction } from "util/types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -38,9 +39,26 @@ export function test(directory, callback, finished = (pass = 0, fail = 0) => {})
             importPath = "./" + importPath;
         }
         import(importPath).then(module => {
-            pass++
-            callback(relativePath)
-            maybeDone()
+            (async () => {
+                // see if there are any async functions exported.
+                for (let name in module) {
+                    let value = module[name];
+                    if (typeof value === "function") {
+                        try {
+                            isAsyncFunction(value) ? await value() : value();
+                        }
+                        catch (e) {
+                            fail++
+                            callback(`${relativePath}#${name}()`, e)
+                            maybeDone()
+                            return;
+                        }
+                    }
+                }
+                pass++
+                callback(relativePath)
+                maybeDone()
+            })();
         }).catch(e => {
             fail++
             callback(relativePath, e)
