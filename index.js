@@ -43,7 +43,7 @@ export function test(directory, callback, finished = (pass = 0, fail = 0) => {})
                 // see if there are any async functions exported.
                 for (let name in module) {
                     let value = module[name];
-                    if (typeof value === "function") {
+                    if (typeof value === "function" && value.length === 0) {
                         try {
                             isAsyncFunction(value) ? await value() : value();
                         }
